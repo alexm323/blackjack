@@ -1,6 +1,7 @@
 import React,{useState} from 'react'
 import parseCardValue from '../helpers'
 import DeckAPI from '../api'
+import Card from './Card'
 
 
 const PlayerHand = ({deck,trackPlayerValue}) => {
@@ -11,8 +12,8 @@ const PlayerHand = ({deck,trackPlayerValue}) => {
 
     const handleHit = async() => {
         const res = await DeckAPI.drawCard(deck)
-        let imgURL = res.cards[0].image
-        setCurrentCards([...currentCards,imgURL])
+        let cardData = res.cards[0]
+        setCurrentCards([...currentCards,cardData])
         let val = parseCardValue(res.cards[0].value)
         // console.log('card val',val)
         // console.log('aceCount val',aces)
@@ -26,7 +27,7 @@ const PlayerHand = ({deck,trackPlayerValue}) => {
             setPlayerValue(playerValue + val)
         }else if(playerValue + val === 21){
             setPlayerValue(playerValue + val)
-            alert('21!')
+            console.log('21!')
         }else{
             setPlayerValue(playerValue + val)
             // alert('You busted!')
@@ -43,7 +44,7 @@ const PlayerHand = ({deck,trackPlayerValue}) => {
             <button onClick={handleHit}>Hit me</button>
             <button onClick={handleStay}>Stay</button>
             {currentCards.map((card) => {
-                return <img src={card} alt="" />
+                return <Card key={card.code} cardName={card.code} cardImg={card.image}/>
             })}
         </div>
     )

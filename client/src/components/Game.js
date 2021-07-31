@@ -18,6 +18,7 @@ function Game({deckId}) {
             {playerQueue.map(num => <p>{num}</p>)}
             {/* <Hand deck={deck}/> */}
             <PlayerHand trackPlayerValue={trackPlayerValue} deck={deckId}/>
+            <PlayerHand trackPlayerValue={trackPlayerValue} deck={deckId}/>
             
         </div>
     )
