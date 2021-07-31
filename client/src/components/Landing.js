@@ -2,13 +2,34 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import '../App.css'
 
+const styles = {
+    landing: {
+        minHeight: '100vh',
+        backgroundColor: `rgba(9, 7, 11, 1)`,
+        display: `flex`,
+        flexDirection: `row`
+    },
+    smallDiv:{
+        width: `30%`,
+        border: `solid 1px white`
+    },
+    largeDiv:{
+        width: `70%`
+    }
+}
 
 const Landing = () => {
     return (
-        <div>
+        <div style={styles.landing}>
+            <div style={styles.largeDiv}>
+                <h1>Welcome to MintJack!</h1>
             <Link to='/signup'>
                 <button>Sign up and play!</button>
             </Link>
+            </div>
+            <div style={styles.smallDiv}>
+                <h2>hey</h2>
+            </div>
         </div>
     )
 }
@@ -16,48 +37,3 @@ const Landing = () => {
 
 
 export default Landing
-
-
-
-
-// const url = `https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=6
-//     `
-//     const [deckId, setDeckId] = useState(null)
-//     const [cards, setCards] = useState(null)
-
-//     useEffect(() => {
-//         axios.get(url)
-//         .then(res =>{
-//             // console.log(res)
-//             setDeckId(res.data.deck_id)
-//         })
-//     }, [])
-
-//     const drawACard = () => {
-//         axios.get(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=2
-//         `)
-//         .then(res => {
-//             // console.log(res.data.cards)
-//             setCards(res.data.cards)
-//         })
-//     }
-
-//     console.log(cards)
-//     if(deckId){
-
-//         return(
-//             <div className="table">
-//                     <h1>BLACKJACK</h1>
-//                     <button type='submit' onClick={drawACard}>Draw a card</button>
-//                     {cards && cards.map(card =>{
-//                         return <img src={card.image}></img>
-//                     })}
-//             </div>    
-    
-                
-//         )
-//     }else{
-//         return (
-//             <div><h1>Loading...</h1></div>
-//         )
-//     }

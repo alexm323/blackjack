@@ -10,3 +10,7 @@ export default function parseCardValue(val){
     }
 
 }
+
+// export default function initializeCardData(cardArr){
+// hello
+// }

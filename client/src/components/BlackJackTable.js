@@ -6,7 +6,7 @@ import Game from './Game'
 const BlackjackTable = () => {
     const [deckId,setDeckId] = useState('')
     const fetchDeck = useCallback(async() => {
-      let res = await axios.get('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1')
+      let res = await axios.get('https://deckofcardsapi.com/api/deck/new/')
       setDeckId(res.data.deck_id)
       
     },[]) 
