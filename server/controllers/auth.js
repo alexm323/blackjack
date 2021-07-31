@@ -102,7 +102,6 @@ exports.postSignup = async (req, res, next) => {
                 alert('There was a problem logging in.')
                 return next(err);
               }
-              // res.redirect(303, "/table");
             });
           });
         }
