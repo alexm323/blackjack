@@ -7,6 +7,7 @@ const methodOverride = require("method-override");
 const logger = require('morgan')
 const flash = require('express-flash')
 const mainRoutes = require('./routes/mainRoutes')
+const postRoutes = require('./routes/postRoutes')
 
 require('dotenv').config({path: './config/.env'})
 
@@ -45,7 +46,7 @@ app.use(methodOverride("_method"));
 
 app.use(flash())
 app.use('/', mainRoutes)
-// app.use('/post', postRoutes); 
+app.use('/post', postRoutes);
 
 app.listen(process.env.PORT, ()=>{
     console.log('Server is running, you better catch it!', `It's running on ${process.env.PORT}`)
