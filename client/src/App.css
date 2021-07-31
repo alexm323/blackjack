@@ -4,7 +4,8 @@
   padding: 0;
   list-style:none;
   font-size: 62.5%;
-  color: white;
+  color: rgba(9, 7, 11, 1);
+  font-family: 'Roboto', sans-serif;
 }
 
 /* fonts */
@@ -16,6 +17,9 @@
 /* 1rem */
 h1{
   font-family: 'Orelega One', cursive;
-  font-size: 4.209rem;
-  color: rgba(242,240,231, 1);
+  font-size: 8.5rem;
+  letter-spacing: .1rem;
+}
+.padding{
+  padding: 1.333rem;
 }
