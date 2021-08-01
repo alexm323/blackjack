@@ -11,36 +11,17 @@ function Game({deckId}) {
         setPlayerQueue([...playerQueue,val])
     }
     const [playerState, setPlayerState] = useState([])
-    // const loadInitialCards = async (deckId, players) => {
-    //     const res = await DeckAPI.drawCard(deckId,(2 + players*2))
-    //     return res.cards;
-    // }
-    let playerStart = []
-    let dealerStart = []
-    // const handleSetup = async(deckId,players) => {
-    //         await loadInitialCards()
-    //         let initialDraw = initializeCardData(cardsArr,players)
-    //         console.log(initialDraw[0],'dealer')
-    //         dealerStart.push(...initialDraw[0])
-    //         // console.log(dealerStart)
-    //         playerStart.push(...initialDraw[1])
-    //         setIsLoadingCards(true)
-    //         // console.log(playerStart)
-    //     }
+    const [dealerState, setDealerState] = useState([])
     const handleSetup = useCallback(async(deckId,players) => {
         const res = await DeckAPI.drawCard(deckId,(2 + players*2))
         let cardsArr = (res.cards)
         let initialDraw = initializeCardData(cardsArr,players)
-        // console.log(initialDraw[0],'dealer')
-        dealerStart.push(...initialDraw[0])
-        console.log(dealerStart)
-        // playerStart.push(...initialDraw[1])
-        setPlayerState((playerState) => [...playerState, ])
+        setPlayerState([...initialDraw[1]])
+        setDealerState([...initialDraw[0]])
         setIsLoadingCards(true)
-        console.log(playerStart)
+
     },[])
-    console.log(playerStart,'playerstart')
-    
+    console.log(dealerState)
     return (
         !loadingCards ? 
         <div>
@@ -53,13 +34,14 @@ function Game({deckId}) {
             <p>This is our Game component</p>
             {/* <button onClick={() => handleSetup(deckId,1)}>Start Game</button> */}
             {playerQueue.map(num => <p>{num}</p>)}
-            <DealerHand initialCards={dealerStart}/>
+            <DealerHand initialCards={dealerState}/>
             {/* console.log(playerStart) */}
-            <p>{playerStart.length}</p>
-            <PlayerHand initialCards={dealerStart} trackPlayerValue={trackPlayerValue} deck={deckId}/>
-            {/* {playerStart.map(cards => {
-                return <PlayerHand initialCards={dealerStart} trackPlayerValue={trackPlayerValue} deck={deckId}/>
-            })} */}
+            <p>{playerState.length}</p>
+        {   playerState.map((cardArr) => {
+                
+            return <PlayerHand initialCards={cardArr} trackPlayerValue={trackPlayerValue} deck={deckId}/>
+            })}
+
             
             
         </div>
