@@ -3,7 +3,7 @@ import DeckAPI from '../api'
 import PlayerHand from './PlayerHand'
 import DealerHand from './DealerHand'
 import {initializeCardData} from '../helpers'
-
+// load a game with the 
 function Game({deckId}) {
     const [loadingCards,setIsLoadingCards] = useState(false)
     const [playerQueue,setPlayerQueue] = useState([])
