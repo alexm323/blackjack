@@ -2,7 +2,7 @@ import React,{useState} from 'react'
 import DeckAPI from '../api'
 
 
-const DealerHand = ({deck}) => {
+const DealerHand = ({deck,initialCards}) => {
     const [dealerValue,setDealerValue] = useState(0)
     const handleClick = async() => {
         const res = await DeckAPI.drawCard(deck)
