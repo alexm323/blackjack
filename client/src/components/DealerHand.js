@@ -1,16 +1,31 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect,useCallback} from 'react'
 import DeckAPI from '../api'
+import { parseCardValue } from '../helpers'
+import Card from './Card'
 
-
-const DealerHand = ({deck}) => {
+const DealerHand = ({deck,initialCards}) => {
+    const [loadedCards,setLoadedCards] = useState(false)
     const [dealerValue,setDealerValue] = useState(0)
-    const handleClick = async() => {
-        const res = await DeckAPI.drawCard(deck)
-        console.log(res.card[0])
-    }
+    const [currentCards,setCurrentCards] = useState([])
+    const loadCards = useCallback(() => {
+        let val = initialCards.reduce((a,c) => a + parseCardValue(c.value),0)
+        setDealerValue(val)
+        setCurrentCards(initialCards)
+    },[])
+    useEffect(() => {
+        loadCards()
+        setLoadedCards(true)
+    },[])
     return (
+        !loadedCards ? 
+        <p>Loading</p>
+        :
         <div>
-            <button onClick={handleClick}>Click to draw</button>
+            <p>Dealer Score</p>
+            <p>{dealerValue}</p>
+            {currentCards.map((card) => {
+                return <Card key={card.code} cardName={card.code} cardImg={card.image}/>
+            })}
         </div>
     )
 }
