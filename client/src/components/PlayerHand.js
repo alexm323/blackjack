@@ -3,13 +3,13 @@ import parseCardValue from '../helpers'
 import DeckAPI from '../api'
 
 
-const PlayerHand = ({deck}) => {
+const PlayerHand = ({deck,trackPlayerValue}) => {
     const [playerValue,setPlayerValue] = useState(0)
     const [currentCards,setCurrentCards] = useState([])
     const [aces,setAces] = useState(0)
 
 
-    const handleClick = async() => {
+    const handleHit = async() => {
         const res = await DeckAPI.drawCard(deck)
         let imgURL = res.cards[0].image
         setCurrentCards([...currentCards,imgURL])
@@ -29,14 +29,19 @@ const PlayerHand = ({deck}) => {
             alert('21!')
         }else{
             setPlayerValue(playerValue + val)
-            alert('You busted!')
+            // alert('You busted!')
         }
+    }
+    const handleStay = async() => {
+        console.log('Stay! Dealer\'s turn now')
+        trackPlayerValue(playerValue)
     }
     return (
         <div>
             <p>Playa Score</p>
             <p>{playerValue}</p>
-            <button onClick={handleClick}>Hit me</button>
+            <button onClick={handleHit}>Hit me</button>
+            <button onClick={handleStay}>Stay</button>
             {currentCards.map((card) => {
                 return <img src={card} alt="" />
             })}
