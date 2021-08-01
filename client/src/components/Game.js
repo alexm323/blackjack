@@ -37,6 +37,8 @@ function Game({deckId}) {
             <DealerHand initialCards={dealerState}/>
             {/* console.log(playerStart) */}
             <p>{playerState.length}</p>
+
+            {/* card objects need to be passed down, and number values handled in the reduce. This will allow robust handling of the ace.*/}
         {   playerState.map((cardArr) => {
                 
             return <PlayerHand initialCards={cardArr} trackPlayerValue={trackPlayerValue} deck={deckId}/>
