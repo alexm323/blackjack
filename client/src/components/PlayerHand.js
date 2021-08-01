@@ -44,7 +44,6 @@ const PlayerHand = ({deck,trackPlayerValue,initialCards}) => {
         setCurrentCards(initialCards)
     },[])
     useEffect(() => {
-        // setCurrentCards((currentCards) => currentCards.concat(initialCards))
         loadCards()
         setLoadedCards(true)
     },[])
