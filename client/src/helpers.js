@@ -28,11 +28,7 @@ function initializeCardData(cards,playerCount){
     return [dealerCards,playerCards]
 
 }
-function calculateValue(cardsArr){
-    return cardsArr.reduce((a,c) => a + parseCardValue(c.value),0)
-}
 module.exports = {
     parseCardValue,
-    initializeCardData,
-    calculateValue
+    initializeCardData
 }

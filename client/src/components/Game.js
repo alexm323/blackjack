@@ -1,9 +1,8 @@
-import React, {useState,useCallback} from 'react'
+import React, {useState,useEffect,useCallback} from 'react'
 import DeckAPI from '../api'
 import PlayerHand from './PlayerHand'
 import DealerHand from './DealerHand'
 import {initializeCardData} from '../helpers'
-<<<<<<< HEAD
 
 function Game({deckId}) {
     // keeping track of the player hands once they are finished with their turn 
@@ -20,21 +19,10 @@ function Game({deckId}) {
         setFinalDealerValue(val)
     }
     
-=======
-import { v4 as uuidv4 } from 'uuid';
-function Game({deckId}) {
-
-    const [playerQueue,setPlayerQueue] = useState([])
-    const [loadingCards,setIsLoadingCards] = useState(false)
-    const trackPlayerValue = (val) => {
-        setPlayerQueue([...playerQueue,val])
-    }
->>>>>>> c0c1992219bcf5fe261d2090b18b7797cbe5409c
     const [playerState, setPlayerState] = useState([])
     const [dealerState, setDealerState] = useState([])
 
     const handleSetup = useCallback(async(deckId,players) => {
-<<<<<<< HEAD
         const res = await DeckAPI.drawCard(deckId,(4))
         let cardsArr = (res.cards)
         let initialDraw = initializeCardData(cardsArr,players)
@@ -57,21 +45,6 @@ function Game({deckId}) {
     }, [finalDealerValue])
 
     // console.log(dealerState)
-=======
-        let cardsArr = await DeckAPI.drawCards(deckId,(2 + players*2))
-        let initialDraw = initializeCardData(cardsArr,players)
-        setPlayerState([...initialDraw[1]])
-        setDealerState([...initialDraw[0]])
-        setIsLoadingCards(true)
-
-    },[])
-    const handleReset = () => {
-        console.log(dealerState)
-        setDealerState([])
-        setPlayerState([])
-        handleSetup(deckId,1)
-    }
->>>>>>> c0c1992219bcf5fe261d2090b18b7797cbe5409c
     return (
         !loadingCards ? 
         <div>
@@ -82,7 +55,6 @@ function Game({deckId}) {
         :
         <div style={styles.game}>
             <p>This is our Game component</p>
-<<<<<<< HEAD
             {/* <button onClick={() => handleSetup(deckId,1)}>Start Game</button> */}
             <div style={{backgroundColor: 'blue'}}>
             <h2 style={{color:'white'}}>Final Player Value</h2>
@@ -99,19 +71,6 @@ function Game({deckId}) {
 
             {/* card objects need to be passed down, and number values handled in the reduce. This will allow robust handling of the ace.*/}
             <PlayerHand initialCards={playerState} trackPlayerValue={trackPlayerValue} deck={deckId}/>
-=======
-            <button onClick={handleReset}>Reset</button>
-            {playerQueue.map(num => <p>{num}</p>)}
-            <DealerHand deck={deckId} trackPlayerValue={trackPlayerValue} initialCards={dealerState}/>
-
-            <p>{playerState.length}</p>
-
-            {/* card objects need to be passed down, and number values handled in the reduce. This will allow robust handling of the ace.*/}
-        {   playerState.map((cardArr) => {
-                
-            return <PlayerHand key={uuidv4()} initialCards={cardArr} trackPlayerValue={trackPlayerValue} deck={deckId}/>
-            })}
->>>>>>> c0c1992219bcf5fe261d2090b18b7797cbe5409c
 
             
             
@@ -181,8 +140,4 @@ const { playerState: { players }, setPlayerState  } = React.useContext(PlayerCon
     money: number,
     isDealer: boolean
   }
-<<<<<<< HEAD
  */
-=======
- */
->>>>>>> c0c1992219bcf5fe261d2090b18b7797cbe5409c

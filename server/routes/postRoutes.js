@@ -5,6 +5,5 @@ const { ensureAuth } = require("../middleware/auth");
 
 
 router.post('/signup', authController.postSignup)
-router.post('/login', authController.postLogin)
 
 module.exports = router;

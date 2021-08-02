@@ -3,7 +3,7 @@ import React from 'react'
 const FormField = (props) => {
     return (
         <div className="formField">
-            <label htmlFor={props.for}>{props.label}</label>
+            <label HtmlFor={props.for}>{props.label}</label>
             <input  className={props.inputClass} 
                     type={props.inputType} 
                     id={props.inputId} 

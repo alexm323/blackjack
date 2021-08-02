@@ -7,7 +7,7 @@ const UserSchema = new mongoose.Schema({
   password: String,
   totalMoney: Number,
   timesBorrowed: Number,
-  country: String,
+  country: String
 });
 
 // Password hash middleware.
