@@ -1,9 +1,10 @@
 import React,{useState,useEffect,useCallback} from 'react'
 import axios from 'axios'
 import Game from './Game'
-
 // fetch the deck and pass it down as a prop to the game component
+import CardContext from './Context/CardContext'
 const BlackjackTable = () => {
+
     const [deckId,setDeckId] = useState('')
     const fetchDeck = useCallback(async() => {
       let res = await axios.get('https://deckofcardsapi.com/api/deck/new/')
@@ -18,7 +19,10 @@ const BlackjackTable = () => {
     return (
       <div style={styles.container}>
         <h1>This is our table</h1>
-        <Game deckId={deckId}/>
+        <CardContext.Provider >
+          <Game deckId={deckId}/>
+        </CardContext.Provider>
+        
       </div>
     );
 

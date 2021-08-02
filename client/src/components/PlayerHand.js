@@ -1,5 +1,5 @@
 import React,{useState,useEffect,useCallback} from 'react'
-import {parseCardValue} from '../helpers'
+import {calculateValue, parseCardValue} from '../helpers'
 import DeckAPI from '../api'
 import Card from './Card'
 
@@ -10,54 +10,22 @@ const PlayerHand = ({deck,trackPlayerValue,initialCards}) => {
     const [currentCards,setCurrentCards] = useState([])
     const [aces,setAces] = useState(0)
 
-
-    const drawCard = async () => {
-        try {
-            const res = await DeckAPI.drawCard(deck)
-            let cardData = res.cards[0] // one card {...} 
-            return cardData;            
-        } catch (e) {
-            console.error(e)
-        }
-    }
     const handleHit = async() => {
-        // console.log(initialCards) // [{...},{...}]
-
-        const nextCard = await drawCard();      
-
-        setCurrentCards([...currentCards,nextCard]) /// All cards in player hand: [{...},{...}]
-
-        let nextCardValue = parseCardValue(nextCard.value) //  Value of next card, NOT initial card values: 11
-      
+        const newCard = await DeckAPI.hit(deck);      
+        setCurrentCards([...currentCards,newCard]) /// All cards in player hand: [{...},{...}]
+        let newCardValue = parseCardValue(newCard.value) //  Value of next card, NOT initial card values: 11
         // check if hand has an ace
         if(currentCards.some(card => card.value === "ACE")){
             setAces((prevAceCount) => prevAceCount + 1)
-            console.log('we have an ace ',aces)
+            // console.log('we have an ace ',aces)
         }
-
         // if values > 21, adjust for aces
-        if((playerValue + nextCardValue) > 21 && aces){
-            setPlayerValue((prevValue) => prevValue + nextCardValue - (10 * aces))
+        if((playerValue + newCardValue) > 21 && aces > 1){
+            setPlayerValue((prevValue) => (prevValue + newCardValue - 10))
             setAces((prev) => prev - 1)
         } else if (playerValue < 21){
-            setPlayerValue((prevValue) => prevValue + nextCardValue)
+            setPlayerValue((prevValue) => prevValue + newCardValue)
         }
-        
-        // what if we check the win on each re-render? the useEffect hook? 
-
-        // if(playerValue + nextCardValue > 21 && aces > 0){
-        //     setPlayerValue((prevValue) => prevValue - 10 + nextCardValue)
-        //     setAces((prevAceCount) => prevAceCount - 1)
-        // }else if(playerValue + nextCardValue < 21){
-        //     setPlayerValue((prevValue) => prevValue + nextCardValue)
-        // }else if(playerValue + nextCardValue === 21){
-        //     setPlayerValue((prevValue) => prevValue + nextCardValue)
-        //     console.log('21!')
-        // }else{
-        //     setPlayerValue((prevValue) => prevValue + nextCardValue)
-        //     console.log('busted!')
-        //     // alert('You busted!')
-        // }
     }
 
     const handleStay = () => {
@@ -66,7 +34,7 @@ const PlayerHand = ({deck,trackPlayerValue,initialCards}) => {
     }
 
     const loadCards = useCallback(() => {
-        let val = initialCards.reduce((a,c) => a + parseCardValue(c.value),0)
+        let val = calculateValue(initialCards)
         setPlayerValue(val)
         setCurrentCards(initialCards)
     },[])
@@ -81,13 +49,13 @@ const PlayerHand = ({deck,trackPlayerValue,initialCards}) => {
             setPlayerValue((prevValue) => prevValue - (10 * aces))
             setAces((prev) => prev - 1)
         }
-        console.log('playerValue: ',playerValue)
-        console.log('aces: ',aces)
+        // console.log('playerValue: ',playerValue)
+        // console.log('aces: ',aces)
         if (playerValue > 21){
-            alert('You busted!')
+            // alert('You busted!')
             console.log('busted!')
         } else if (playerValue === 21) {
-            alert('21!')
+            // alert('21!')
             console.log('21!')
         }
     },[playerValue, aces])
