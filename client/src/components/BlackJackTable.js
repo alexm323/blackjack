@@ -2,7 +2,7 @@ import React,{useState,useEffect,useCallback} from 'react'
 import axios from 'axios'
 import Game from './Game'
 
-
+// fetch the deck and pass it down as a prop to the game component
 const BlackjackTable = () => {
     const [deckId,setDeckId] = useState('')
     const fetchDeck = useCallback(async() => {
