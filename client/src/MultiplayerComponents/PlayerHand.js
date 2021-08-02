@@ -29,7 +29,7 @@ const PlayerHand = ({deck,trackPlayerValue,initialCards}) => {
 
         let nextCardValue = parseCardValue(nextCard.value) //  Value of next card, NOT initial card values: 11       
 
-        // console.log('all aces: ',numOfAces(),' initial aces: ',numOfInitialAces())
+        console.log('all aces: ',numOfAces(),' initial aces: ',numOfInitialAces())
 
         // TODO: resolve edge case of if there are two initial aces, and a hit results in > 21, or if there are 3+ aces in a hand
         setPlayerValue((prev) => {
@@ -68,7 +68,7 @@ const PlayerHand = ({deck,trackPlayerValue,initialCards}) => {
 
         // check if hand has an ace, and return num of aces if yes
         function numOfAces () {           
-                // console.log('we have an ace ',aces)
+                console.log('we have an ace ',aces)
                 return currentCards.reduce((acc,{value}) => {
                     if (value === 'ACE'){
                         acc++
@@ -84,7 +84,7 @@ const PlayerHand = ({deck,trackPlayerValue,initialCards}) => {
             return initialCards.some(card => card.value === "ACE")
         }
         function numOfInitialAces(params) {
-            // console.log('we have an initial ace ',aces)
+            console.log('we have an initial ace ',aces)
                 return initialCards.reduce((acc,{value}) => {
                     if (value === 'ACE'){
                         acc++
@@ -129,7 +129,29 @@ const PlayerHand = ({deck,trackPlayerValue,initialCards}) => {
             }
             return 0;
         }
+        // if values > 21, adjust for aces
+        // if((playerValue + nextCardValue) > 21 && aces){
+        //     setPlayerValue((prevValue) => prevValue + nextCardValue - (10 * aces))
+        //     setAces((prev) => prev - 1)
+        // } else if (playerValue < 21){
+        //     setPlayerValue((prevValue) => prevValue + nextCardValue)
+        // }
+        
+        // what if we check the win on each re-render? the useEffect hook? 
 
+        // if(playerValue + nextCardValue > 21 && aces > 0){
+        //     setPlayerValue((prevValue) => prevValue - 10 + nextCardValue)
+        //     setAces((prevAceCount) => prevAceCount - 1)
+        // }else if(playerValue + nextCardValue < 21){
+        //     setPlayerValue((prevValue) => prevValue + nextCardValue)
+        // }else if(playerValue + nextCardValue === 21){
+        //     setPlayerValue((prevValue) => prevValue + nextCardValue)
+        //     console.log('21!')
+        // }else{
+        //     setPlayerValue((prevValue) => prevValue + nextCardValue)
+        //     console.log('busted!')
+        //     // alert('You busted!')
+        // }
     }
 
     const handleStay = () => {
@@ -149,18 +171,15 @@ const PlayerHand = ({deck,trackPlayerValue,initialCards}) => {
     },[])
 
     useEffect(() => {
-        //TODO: diable user actions on win or bust
+
         checkWin(playerValue)
         function checkWin (playerValue) {
             if (playerValue > 21){
                 alert('You busted!')
                 console.log('busted!')
-                handleStay(playerValue)
-                
             } else if (playerValue === 21) {
                 alert('21!')
                 console.log('21!')
-                handleStay(playerValue)
             }
         }
         
