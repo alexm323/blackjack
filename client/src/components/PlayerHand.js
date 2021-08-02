@@ -1,5 +1,5 @@
 import React,{useState,useEffect,useCallback} from 'react'
-import {parseCardValue} from '../helpers'
+import {calculateValue, parseCardValue} from '../helpers'
 import DeckAPI from '../api'
 import Card from './Card'
 
@@ -10,16 +10,6 @@ const PlayerHand = ({deck,trackPlayerValue,initialCards}) => {
     const [currentCards,setCurrentCards] = useState([])
     const [aces,setAces] = useState(0)
 
-
-    const drawCard = async () => {
-        try {
-            const res = await DeckAPI.drawCard(deck)
-            let cardData = res.cards[0] // one card {...} 
-            return cardData;            
-        } catch (e) {
-            console.error(e)
-        }
-    }
     const handleHit = async() => {
         // console.log(initialCards) // [{...},{...}]
 
@@ -138,7 +128,7 @@ const PlayerHand = ({deck,trackPlayerValue,initialCards}) => {
     }
 
     const loadCards = useCallback(() => {
-        let val = initialCards.reduce((a,c) => a + parseCardValue(c.value),0)
+        let val = calculateValue(initialCards)
         setPlayerValue(val)
         setCurrentCards(initialCards)
     },[])

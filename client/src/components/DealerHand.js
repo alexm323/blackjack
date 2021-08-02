@@ -2,6 +2,7 @@ import React,{useState,useEffect,useCallback} from 'react'
 import DeckAPI from '../api'
 import { parseCardValue } from '../helpers'
 import Card from './Card'
+<<<<<<< HEAD
 
 const DealerHand = ({deck,initialCards,finalPlayerValue,trackDealerValue}) => {
     const [loadedCards,setLoadedCards] = useState(false)
@@ -132,6 +133,13 @@ const DealerHand = ({deck,initialCards,finalPlayerValue,trackDealerValue}) => {
     }
 
 
+=======
+const DealerHand = ({deck,initialCards,trackPlayerValue}) => {
+    const [loadedCards,setLoadedCards] = useState(false)
+    const [dealerValue,setDealerValue] = useState(0)
+    const [currentCards,setCurrentCards] = useState([])
+    const [aces,setAces] = useState(0)
+>>>>>>> c0c1992219bcf5fe261d2090b18b7797cbe5409c
     const loadCards = useCallback(() => {
         let val = initialCards.reduce((a,c) => a + parseCardValue(c.value),0)
         setDealerValue(val)

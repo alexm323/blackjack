@@ -8,5 +8,15 @@ module.exports = {
     } catch (err) {
       console.log(err)
     }
-  }
+  },
+  getLoggedInUser: async (req, res) => {
+    console.log(req.user)
+    try {
+      const user = req.user
+      console.log(user)
+      res.json(user)
+    } catch (err) {
+      console.log(err)
+    }
+  },
 }    
