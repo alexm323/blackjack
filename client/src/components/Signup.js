@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import { UserContext } from '../Context/UserContext'
 import axios from 'axios'
 import {Redirect} from "react-router-dom";
 import FormField from './FormField';
@@ -18,6 +19,20 @@ const styles = {
     }
 }
 const Signup = () => {
+
+    const {loggedInUserContext, setLoggedInUserContext} = useContext(UserContext)
+    
+    // checks for logged in user and redirects to table if it finds one
+    useEffect(()=>{
+        axios.get('http://localhost:3000/loggedInUser')
+        .then(res => {
+            console.log(res.data)
+            if(Object.keys(res.data).length > 0){
+                setLoggedInUserContext(true)
+            }
+        })
+    }, [])
+    
     const [values, setValues] = useState({
     userName: '',
     email: '',
@@ -25,109 +40,101 @@ const Signup = () => {
     password: '',
     confirmPassword: ''
     })
-    const [uploading, setUploading] = useState(false)
-    const [redirect, setRedirect] = useState(false)
 
-function updateValue(e){
-    const {name, value} = e.target
-    setValues({
+    function updateValue(e){
+        const {name, value} = e.target
+        setValues({
         ...values,
         [name]: value
-    })
-}
-const handleSubmitFile = (e) =>{
-    e.preventDefault()
-    createAccount()
-    setUploading(true)
-}
+        })
+    }
+    const handleSubmitFile = (e) =>{
+        e.preventDefault()
+        createAccount()
+        // setUploading(true)
+    }   
 
-const createAccount = () => {
+    const createAccount = () => {
 
         axios.post('http://localhost:3000/post/signup', values)
             .then(({data}) => {
-            console.log('hello')
             console.log(data)
-            setUploading(false)
-            setRedirect(true)
+            setLoggedInUserContext(true)
         })
-}
-    if(!redirect){
+    }
+
+    console.log(loggedInUserContext)
+    if(loggedInUserContext){
         return(
-            <div style={styles.signupDiv}>
-                <form style={styles.signupForm}
-                    onSubmit={handleSubmitFile}
-                >
-                    <FormField
-                        for='userName'
-                        label='User Name'
-                        inputClass=''
-                        inputType='text'
-                        inputId='userName'
-                        inputName='userName'
-                        value={values.username}
-                        onChange={(e) => updateValue(e)} 
-                    />
-                    <FormField
-                        for='email'
-                        label='Email'
-                        inputClass=''
-                        inputType='email'
-                        inputId='email'
-                        inputName='email'
-                        value={values.email}
-                        onChange={(e) => updateValue(e)}
-                    />
-                    <FormField
-                        for='country'
-                        label='Country'
-                        inputClass=''
-                        inputType='country'
-                        inputId='country'
-                        inputName='country'
-                        value={values.country}
-                        onChange={(e) => updateValue(e)}
-                    />
-                    <FormField
-                        for='password'
-                        label='Password'
-                        inputClass=''
-                        inputType='password'
-                        inputId='password'
-                        inputName='password'
-                        value={values.password}
-                        onChange={(e) => updateValue(e)}
-                    />
-                    <FormField
-                        for='confirmPassword'
-                        label='Confirm Password'
-                        inputClass=''
-                        inputType='password'
-                        inputId='confirmPassword'
-                        inputName='confirmPassword'
-                        value={values.confirmPassword}
-                        onChange={(e) => updateValue(e)}
-                    />
-                    <Button 
-                        buttonDivCLass=''
-                        buttonClass=''
-                        buttonText='Sign up!'
-                    />
-                </form>
-            </div>  
+                
+        <Redirect to='/table' />
+            
         )
-    }else if(uploading){
-        return(
-            <div>
-                <h1>Creating user...</h1>
-            </div>  
-        )
-    }else if(redirect){
+    } else if(!loggedInUserContext){
 
         return(
-            
-            <Redirect to='/table' />
-    
-        )
-    }
+            <div style={styles.signupDiv}>
+                    <form   style={styles.signupForm}
+                            onSubmit={handleSubmitFile}
+                    >
+                        <FormField
+                            for='userName'
+                            label='User Name'
+                            inputClass=''
+                            inputType='text'
+                            inputId='userName'
+                            inputName='userName'
+                            value={values.username}
+                            onChange={(e) => updateValue(e)} 
+                        />
+                        <FormField
+                            for='email'
+                            label='Email'
+                            inputClass=''
+                            inputType='email'
+                            inputId='email'
+                            inputName='email'
+                            value={values.email}
+                            onChange={(e) => updateValue(e)}
+                        />
+                        <FormField
+                            for='country'
+                            label='Country'
+                            inputClass=''
+                            inputType='country'
+                            inputId='country'
+                            inputName='country'
+                            value={values.country}
+                            onChange={(e) => updateValue(e)}
+                        />
+                        <FormField
+                            for='password'
+                            label='Password'
+                            inputClass=''
+                            inputType='password'
+                            inputId='password'
+                            inputName='password'
+                            value={values.password}
+                            onChange={(e) => updateValue(e)}
+                        />
+                        <FormField
+                            for='confirmPassword'
+                            label='Confirm Password'
+                            inputClass=''
+                            inputType='password'
+                            inputId='confirmPassword'
+                            inputName='confirmPassword'
+                            value={values.confirmPassword}
+                            onChange={(e) => updateValue(e)}
+                        />
+                        <Button 
+                            buttonDivCLass=''
+                            buttonClass=''
+                            buttonText='Sign up!'
+                        />
+                    </form>
+                </div>  
+            )
+        }
 }
 export default Signup

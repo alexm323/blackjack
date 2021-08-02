@@ -3,7 +3,17 @@ const validator = require("validator");
 const User = require("../models/User");
 
 
-exports.postLogin = (req, res, next) => {
+exports.postLogin = async (req, res, next) => {
+  console.log(req.body.email, req.body.password)
+  // try{
+  //   const user = await User.find({'email': req.body.email})
+  //   // console.log(user)
+  //   res.json(user)
+  //   }
+  // catch(err){
+  //     console.log(err)
+  // }
+
   const validationErrors = [];
   if (!validator.isEmail(req.body.email))
     validationErrors.push({ msg: "Please enter a valid email address." });
@@ -31,9 +41,12 @@ exports.postLogin = (req, res, next) => {
         return next(err);
       }
       req.flash("success", { msg: "Success! You are logged in." });
-      res.redirect(req.session.returnTo || "/feed");
+      console.log('success')
+      res.json(user)
+      // res.redirect(req.session.returnTo);
     });
   })(req, res, next);
+
 };
 
 exports.logout = (req, res) => {
