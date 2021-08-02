@@ -5,20 +5,34 @@ import {Redirect} from "react-router-dom";
 import FormField from './FormField';
 import Button from './Button';
 
-const styles = {
-    signupDiv: {
+const styles ={
+    hero:{
         minHeight: '100vh',
-        backgroundColor: 'rgb(9, 7, 11)',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
+        width: `100%`,
+        padding: '1.777rem'
     },
-    signupForm: {
-        backgroundColor: 'rgb(242, 240, 231)',
+    landing: {
+        backgroundColor: `rgba(242,240,231, 1)`,
+        display: `flex`,
+        flexDirection: `row`,
+        flexFlow: 'row wrap',
+    },
+    marginTop: {
+        marginTop: '1.777rem'
+    },
+    form:{
+        backgroundColor: `aliceblue`,
+        width: `70%`,
+        padding: '4.209rem',
+        borderRadius: '1rem',
     }
 }
 const Signup = () => {
+    
 
     const {loggedInUserContext, setLoggedInUserContext} = useContext(UserContext)
     
@@ -73,20 +87,24 @@ const Signup = () => {
     } else if(!loggedInUserContext){
 
         return(
-            <div style={styles.signupDiv}>
-                    <form   style={styles.signupForm}
+            <div style={styles.landing}>
+                <div style={styles.hero}>
+                    <form   style={styles.form}
                             onSubmit={handleSubmitFile}
                     >
-                        <FormField
-                            for='userName'
-                            label='User Name'
-                            inputClass=''
-                            inputType='text'
-                            inputId='userName'
-                            inputName='userName'
-                            value={values.username}
-                            onChange={(e) => updateValue(e)} 
-                        />
+                        <div style={styles.marginTop}>
+                            <FormField
+                                for='userName'
+                                label='User Name'
+                                inputClass=''
+                                inputType='text'
+                                inputId='userName'
+                                inputName='userName'
+                                value={values.username}
+                                onChange={(e) => updateValue(e)} 
+                            />
+                        </div>
+                        <div style={styles.marginTop}>
                         <FormField
                             for='email'
                             label='Email'
@@ -97,6 +115,9 @@ const Signup = () => {
                             value={values.email}
                             onChange={(e) => updateValue(e)}
                         />
+                        </div>
+                        <div style={styles.marginTop}>
+                            
                         <FormField
                             for='country'
                             label='Country'
@@ -107,6 +128,8 @@ const Signup = () => {
                             value={values.country}
                             onChange={(e) => updateValue(e)}
                         />
+                        </div>
+                        <div style={styles.marginTop}>
                         <FormField
                             for='password'
                             label='Password'
@@ -117,6 +140,8 @@ const Signup = () => {
                             value={values.password}
                             onChange={(e) => updateValue(e)}
                         />
+                        </div>
+                        <div style={styles.marginTop}>    
                         <FormField
                             for='confirmPassword'
                             label='Confirm Password'
@@ -127,13 +152,15 @@ const Signup = () => {
                             value={values.confirmPassword}
                             onChange={(e) => updateValue(e)}
                         />
-                        <Button 
-                            buttonDivCLass=''
-                            buttonClass=''
-                            buttonText='Sign up!'
-                        />
+                        </div>
+                        <div style={styles.marginTop}>
+                        <button type='submit' className='navBtns'>
+                            Sign up!
+                        </button>
+                    </div>
                     </form>
-                </div>  
+                </div>
+            </div>  
             )
         }
 }

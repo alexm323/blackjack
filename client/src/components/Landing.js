@@ -93,15 +93,6 @@ const styles = {
         justifyContent: 'space-between',
         marginTop: '1.333rem'
     },
-    // navBtns:{
-    //     backgroundColor: `rgba(255,255,255, .7)`,
-    //     padding:`1.777rem`,
-    //     borderRadius: `1rem`,
-    //     width: `16rem`,
-    //     textAlign: 'center',
-    //     marginRight: `1.777rem`,
-    //     display: 'inline-block'
-    // }
 }
 
 const Landing = () => {
